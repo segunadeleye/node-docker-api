@@ -65,3 +65,23 @@ services:
     links:
       - locations-db
       - users-service
+
+  web:
+    container_name: web
+    build: ./web/
+    volumes:
+      - './web:/src/app'
+      - './web/package.json:/src/package.json'
+    ports:
+      - '3003:3003'
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - SECRET_KEY=changeme
+    depends_on:
+      users-service:
+        condition: service_started
+      locations-service:
+        condition: service_started
+    links:
+      - users-service
+      - locations-service
