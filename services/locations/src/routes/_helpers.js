@@ -17,7 +17,7 @@ function getWeather(locationsArray) {
 
 function ensureAuthenticated(req, res, next) {
   if (!(req.headers && req.headers.authorization)) {
-    return res.status(400).json({ status: 'Please log in', });
+    return res.status(400).json({ status: 'Please log in' });
   }
   const options = {
     method: 'GET',
@@ -31,7 +31,8 @@ function ensureAuthenticated(req, res, next) {
   return request(options)
   .then((response) => {
     req.user = response.user;
-    return next(); })
+    return next();
+  })
   .catch((err) => { return next(err); });
 }
 
