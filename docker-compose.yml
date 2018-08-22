@@ -85,3 +85,19 @@ services:
     links:
       - users-service
       - locations-service
+
+  tests:
+    container_name: tests
+    build: ./tests/
+    volumes:
+      - './tests:/src/app'
+      - './tests/package.json:/src/package.json'
+    depends_on:
+      users-service:
+        condition: service_started
+      locations-service:
+        condition: service_started
+    links:
+      - users-service
+      - locations-service
+      - web
